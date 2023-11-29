@@ -1,9 +1,11 @@
 from django.shortcuts import HttpResponse, render
 from datetime import date
+from post.models import Product
 
 
-def hello_view(request):
-    return HttpResponse("Hello! It's my project ﾐ🎀・◦・ﾐ")
+def main_view(request):
+    products = Product.objects.all()
+    return render(request, 'index.html')
 
 
 def current_date_view(request):
@@ -14,5 +16,12 @@ def current_date_view(request):
 
 def goodbye_view(request):
     return HttpResponse('Goodbye user! ﾐ🎀・◦・ﾐ')
+
+
+def products_view(request):
+    products = Product.objects.all()
+    return render(request, 'products/products.html', context={
+        'products': products
+    })
 
 
