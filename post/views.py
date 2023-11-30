@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, render
 from datetime import date
-from post.models import Product
+from post.models import Product, Category
 
 
 def main_view(request):
@@ -24,4 +24,10 @@ def products_view(request):
         'products': products
     })
 
+
+def categories_view(request):
+    categories = Category.objects.all()
+    return render(request, 'products/categories.html', context={
+        'categories': categories
+    })
 

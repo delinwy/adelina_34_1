@@ -11,6 +11,9 @@
       <div class="card-body">
         <h5 class="card-title">{{ product.product_name }}</h5>
         <p class="card-text">{{ product.product_price }}</p>
+          {% for category in product.categories.all %}
+            <a href="#" class="btn btn-primary">#{{ category.description }}</a>
+          {% endfor %}
         <a href="#" class="btn btn-primary">More</a>
       </div>
     </div>
