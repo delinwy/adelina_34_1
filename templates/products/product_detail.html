@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+  <h1>
+      Product detail
+  </h1>
+
+  <h2>
+    {{ product.product_name }} {{ product.product_price }}
+  </h2>
+
+  <p>
+    {{ product.product_description }}
+  </p>
+
+  <img src="/media/{{ product.image }}" width="50%">
+
+  {% for category in product.categories.all %}
+    <a href="#" class="btn btn-primary">#{{ category.description }}</a>
+  {% endfor %}
+
+  <h2>
+    Dates:
+  </h2>
+  <p>Added: {{ product.added_at }}</p>
+  <p>Updated: {{ product.updated_at }}</p>
+
+  <h1>Reviews:</h1>
+  {% for review in product.reviews.all %}
+    <p>{{ review.text }}</p>
+  {% endfor %}
+
+
+{% endblock %}

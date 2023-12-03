@@ -26,6 +26,16 @@ class Product(models.Model):
         return f'{self.product_name}'
 
 
+class Review(models.Model):
+    product = models.ForeignKey(
+        'post.Product',
+        on_delete=models.CASCADE,
+        related_name='reviews'
+    )
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 
 
 
