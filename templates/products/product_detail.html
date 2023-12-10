@@ -26,10 +26,22 @@
   <p>Added: {{ product.added_at }}</p>
   <p>Updated: {{ product.updated_at }}</p>
 
+  <h1>
+    Create Review
+  </h1>
+
+  <form action="/products/{{ product.id }}/" method="post">
+    {% csrf_token %}
+    {{ form }}
+
+    <input type="submit" value="Add review">
+  </form>
+
   <h1>Reviews:</h1>
   {% for review in product.reviews.all %}
     <p>{{ review.text }}</p>
   {% endfor %}
+
 
 
 {% endblock %}

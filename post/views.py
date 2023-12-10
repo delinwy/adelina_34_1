@@ -1,6 +1,7 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, render, redirect
 from datetime import date
 from post.models import Product, Category, Review
+from post.forms import ProductCreateForm, CategoryForm, ReviewForm
 
 
 def main_view(request):
@@ -41,6 +42,22 @@ def product_detail_view(request, product_id):
         return render(request,
                       'products/product_detail.html',
                       context=context)
+    if request.method == 'POST':
+        product = Product.objects.get(id=product_id)
+        form = ReviewForm(data=request.POST)
+
+        if form.is_valid():
+            Review.objects.create(
+                text=form.cleaned_data.get('text'),
+                product=product
+            )
+
+        context = {
+            'product': product,
+            'review': product.reviews.all(),
+            'form': ReviewForm
+        }
+        return render(request, 'products/product_detail.html', context=context)
 
 
 def categories_view(request):
@@ -50,3 +67,40 @@ def categories_view(request):
             'categories': categories
         })
 
+
+def product_create(request):
+    if request.method == 'GET':
+        context = {
+            "form": ProductCreateForm
+        }
+        return render(request, 'products/create.html', context=context)
+
+    if request.method == 'POST':
+        form = ProductCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            Product.objects.create(**form.cleaned_data)
+            return redirect("/products/")
+
+        context = {
+            "form": form
+        }
+
+        return render(request, 'products/create.html', context=context)
+
+
+def category_create(request):
+    if request.method == "GET":
+        context = {
+            'form': CategoryForm
+        }
+        return render(request, 'products/create_category.html', context)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            Category.objects.create(**form.cleaned_data)
+            return redirect('/categories/')
+
+        context = {
+            'form': form
+        }
+        return render(request, 'products/create_category.html', context)
