@@ -12,8 +12,13 @@ urlpatterns = [
     path('products/', views.products_view),
     path('products/create/', views.product_create),
     path('products/<int:product_id>/', views.product_detail_view),
+<<<<<<< HEAD
     path('categories/', views.categories_view),
     path('categories/create/', views.category_create),
 ]
+=======
+    path('categories/', views.categories_view)
+] 
+>>>>>>> 619864d936e084df7ae9702f76dc5c22662c0c86
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
